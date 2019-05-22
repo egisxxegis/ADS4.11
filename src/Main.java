@@ -2,6 +2,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.*;
 
 /*input.txt example:
 A B
@@ -100,7 +101,11 @@ public class Main {
 
     private static void makeTree(int[][] matrix, int start, boolean[] visited, int parent)
     {
-
+        Deque<Integer> waitingRow = new ArrayDeque<>(); //bfs
+        waitingRow.addFirst(start); //bfs
+        while(waitingRow.size() > 0){ //bfs
+        parent = start;
+        start = waitingRow.removeFirst(); //bfs
         visited[start]=true;
         for(int i=0; i<matrix.length; i++)
         {
@@ -113,10 +118,12 @@ public class Main {
                 }
                 if (!visited[i])
                 {
-                    makeTree(matrix,i,visited,start);
-                }
-            }
-
-        }
+                    visited[i] = true;   //paziurek ar sita eilute ka keicia
+                    waitingRow.addLast(i); //bfs
+                    //makeTree(matrix,i,visited,start);
+                }//if not visited
+            }//if connects
+        }//for each
+        }//while
     }
 }
